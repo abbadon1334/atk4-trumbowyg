@@ -9,5 +9,5 @@ $app->initLayout('Centered');
 $form = $app->add('Form');
 $form->addField('editor', [
     new TextEditor(),
-    'placeholder' => 'test html'
+    'placeholder' => 'test placeholder'
 ]);

@@ -49,7 +49,7 @@ class TextEditor extends TextArea
         $this->addRequiredAssets();
         foreach($this->plugins as $plugin)
         {
-
+            $this->addRequiredPlugin($plugin);
         }
         //$this->setStyle('display','block');
 
@@ -91,7 +91,6 @@ class TextEditor extends TextArea
 
     private function addRequiredPlugin($plugin_asset) :void
     {
-
         $plugin_asset = $this->assets_path . $plugin_asset;
 
         if($this->isAssetLoaded($plugin_asset)) {
