@@ -1,0 +1,7 @@
+{
+  "name": "atk4-trumbowyg",
+  "version": "1.0.0",
+  "dependencies": {
+    "trumbowyg": "^2.19.0"
+  }
+}
