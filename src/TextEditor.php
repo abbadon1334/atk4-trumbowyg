@@ -2,6 +2,9 @@
 
 namespace atk4\ui\FormField;
 
+// @TODO find a better way to load assets
+// @TODO add realpath security check
+
 class TextEditor extends TextArea
 {
     public $defaultTemplate = __DIR__ . '/../template/trumbowyg.html';
@@ -91,7 +94,7 @@ class TextEditor extends TextArea
 
     private function addRequiredPlugin($plugin_asset) :void
     {
-        $plugin_asset = $this->assets_path . $plugin_asset;
+        $plugin_asset = $this->assets_path . '/plugins/'.$plugin_asset;
 
         if($this->isAssetLoaded($plugin_asset)) {
             return;
