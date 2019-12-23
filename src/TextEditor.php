@@ -11,7 +11,8 @@ class TextEditor extends TextArea
 
     private static $loaded_assets = [];
 
-    public $assets_path = '/assets';
+    //public $assets_path = '/assets';
+    public $assets_path = "https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.20.0";
 
     protected $required_js = [
         '/trumbowyg.js',
@@ -60,6 +61,7 @@ class TextEditor extends TextArea
         $this->editor_options['autogrow'] = $this->option_autogrow;
 
         $this->jsInput(true)->trumbowyg($this->editor_options);
+        $this->jsInput(true)->parent()->find('.trumbowyg-editor')->attr('id', $this->short_name.'-editor');
     }
 
     private function addRequiredAssets() :void

@@ -17,11 +17,12 @@
     "phpunit/phpunit": "<6",
     "phpunit/phpcov": "^3.0",
     "codeclimate/php-test-reporter": "*",
-    "behat/behat": "^3.4",
+    "behat/behat": "*",
     "behat/mink-selenium2-driver": "^1.3",
     "behat/mink-extension": "^2.2",
     "guzzlehttp/guzzle": "^6.3",
-    "symfony/process": "^4.3"
+    "symfony/process": "^4.3",
+    "leanphp/behat-code-coverage": "^3.2@dev"
   },
   "autoload": {
     "psr-4": {
@@ -30,7 +31,7 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "atk4\\ui\\tests\\":"tests/"
+      "TextEditor\\Tests\\":"tests/"
     }
   }
 }
