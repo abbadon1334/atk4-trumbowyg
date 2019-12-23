@@ -1,0 +1,35 @@
+default:
+  suites:
+    my_suite:
+      contexts:
+        - FeatureContext
+        - Behat\MinkExtension\Context\MinkContext
+  extensions:
+    Behat\MinkExtension:
+      show_cmd: 'open %s'
+      base_url:  'http://127.0.0.1:8888/'
+      sessions:
+        default:
+          selenium2:
+            browser: chrome
+            wd_host: http://127.0.0.1:4444/wd/hub
+            capabilities:
+              chrome:
+                switches:
+                  - "--headless"
+                  - "--disable-gpu"
+                  - "--window-size=1920,1080"
+                  - "--no-sandbox"
+                  - "--disable-extensions"
+    LeanPHP\Behat\CodeCoverage\Extension:
+      drivers:
+        - local
+      filter:
+        whitelist:
+          include:
+            directories:
+              'src': ~
+      report:
+        format:   clover
+        options:
+          target: build/logs
