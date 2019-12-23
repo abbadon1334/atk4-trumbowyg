@@ -38,7 +38,7 @@ jobs:
           mkdir -p coverage
           #mysql -uroot -ppassword -h mysql -e 'CREATE DATABASE atk4;'
           #mysql -uroot -ppassword -h mysql atk4 < demos/atk4.sql
-          mv demos/db.github.php demos/db.php
+          #mv demos/db.github.php demos/db.php
           
       - name: Unit Testing
         run: vendor/bin/phpunit --coverage-text --coverage-clover=coverage.xml
