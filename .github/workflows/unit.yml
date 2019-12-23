@@ -20,22 +20,35 @@ jobs:
           DB_DATABASE: db
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=5
     steps:
-      - uses: MilesChou/composer-action@master
-        with:
-          args: install
+      - name: Start DockerCompose
+        run: docker-compose -f docker-compose.yml -d
+      - name: Check running containers
+        run: docker ps -a
+
+      - name: Check logs
+        run: |
+          docker logs behat
+          docker logs web
+
+      - name: Setup composer
+        run: composer install
 
       - name: Install dependencies and SQL
         run: |
-          mkdir -p coverage
           #mysql -uroot -ppassword -h mysql -e 'CREATE DATABASE atk4;'
           #mysql -uroot -ppassword -h mysql atk4 < demos/atk4.sql
           #mv demos/db.github.php demos/db.php
-          
+
+      - name: Setup coverage / build folders
+        run: |
+          mkdir -p coverage
+          mkdir -p build
+
       - name: Unit Testing
         run: vendor/bin/phpunit --coverage-text --coverage-clover=coverage.xml
-        
-      - name: Behat Testing
-        run: vendor/bin/behat
+
+      - name: Run behat test
+        run: docker exec behat vendor\bin\behat
 
       - name: Merge coverage logs
         run: vendor/bin/phpcov merge build/logs/ --clover build/logs/cc.xml;

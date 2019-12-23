@@ -1,0 +1,19 @@
+version: "2"
+
+services:
+  # Behat
+  behat:
+    hostname: behat
+    image: docksal/behat
+    volumes:
+      - .:/src
+    # Run a built-in web server for access to HTML reports
+    ports:
+      - 8000:8000
+      - 4444:4444
+    entrypoint: "php -S 0.0.0.0:8000"
+  # Selenium
+  browser:
+    hostname: browser
+    image: selenium/standalone-chrome
+    #image: selenium/standalone-firefox
