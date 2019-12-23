@@ -3,7 +3,6 @@
 use Behat\Behat\Hook\Scope\AfterStepScope;
 use Behat\Mink\Driver\Selenium2Driver;
 use Behat\Mink\Exception\DriverException;
-use Behat\Mink\Exception\ElementNotFoundException;
 use Behat\Mink\Exception\UnsupportedDriverActionException;
 use Behat\MinkExtension\Context\RawMinkContext;
 
@@ -12,6 +11,8 @@ use Behat\MinkExtension\Context\RawMinkContext;
  */
 class FeatureContext extends RawMinkContext
 {
+    protected $button = null;
+
     /**
      * Initializes context.
      *
@@ -23,21 +24,19 @@ class FeatureContext extends RawMinkContext
     {
     }
 
-    protected $button = null;
-
-    public function getSession($name = null)
-    {
-        return $this->getMink()->getSession($name);
-    }
-
     /**
      * @When I use form with button :arg1
      */
     public function iUseFormWithButton($arg1)
     {
-        $button = $this->getSession()->getPage()->find('xpath', "//div[text()='".$arg1."']");
+        $button = $this->getSession()->getPage()->find('xpath', "//div[text()='" . $arg1 . "']");
         $this->button_id = $button->getAttribute('id');
         $button->click();
+    }
+
+    public function getSession($name = null)
+    {
+        return $this->getMink()->getSession($name);
     }
 
     /**
@@ -46,6 +45,16 @@ class FeatureContext extends RawMinkContext
     public function formSubmits()
     {
         $this->jqueryWait(20000);
+    }
+
+    /**
+     * Wait till jquery ajax request finished and no animation is perform.
+     *
+     * @param int $duration The maximum time to wait for the function.
+     */
+    protected function jqueryWait($duration = 1000)
+    {
+        $this->getSession()->wait($duration, '(0 === jQuery.active && 0 === jQuery(\':animated\').length)');
     }
 
     /**
@@ -61,7 +70,7 @@ class FeatureContext extends RawMinkContext
      */
     public function iPressButton($arg1)
     {
-        $button = $this->getSession()->getPage()->find('xpath', '//div[text()="'.$arg1.'"]');
+        $button = $this->getSession()->getPage()->find('xpath', '//div[text()="' . $arg1 . '"]');
         $button->click();
     }
 
@@ -70,7 +79,7 @@ class FeatureContext extends RawMinkContext
      */
     public function iClickLink($arg1)
     {
-        $link = $this->getSession()->getPage()->find('xpath', '//a[text()="'.$arg1.'"]');
+        $link = $this->getSession()->getPage()->find('xpath', '//a[text()="' . $arg1 . '"]');
         $link->click();
     }
 
@@ -87,9 +96,9 @@ class FeatureContext extends RawMinkContext
      */
     public function iSee($arg1)
     {
-        $element = $this->getSession()->getPage()->find('xpath', '//div[text()="'.$arg1.'"]');
+        $element = $this->getSession()->getPage()->find('xpath', '//div[text()="' . $arg1 . '"]');
         if ($element->getAttribute('style')) {
-            throw new \Exception("Element with text \"$arg1\" must be invisible");
+            throw new Exception("Element with text \"$arg1\" must be invisible");
         }
     }
 
@@ -101,7 +110,7 @@ class FeatureContext extends RawMinkContext
         $field = $this->assertSession()->fieldExists($field);
 
         if (0 !== strpos($field->getValue(), $value)) {
-            throw new \Exception('Field value '.$field->getValue().' does not start with '.$value);
+            throw new Exception('Field value ' . $field->getValue() . ' does not start with ' . $value);
         }
     }
 
@@ -110,7 +119,7 @@ class FeatureContext extends RawMinkContext
      */
     public function dump($arg1)
     {
-        $element = $this->getSession()->getPage()->find('xpath', '//div[text()="'.$arg1.'"]');
+        $element = $this->getSession()->getPage()->find('xpath', '//div[text()="' . $arg1 . '"]');
         var_dump($element->getOuterHtml());
     }
 
@@ -119,9 +128,9 @@ class FeatureContext extends RawMinkContext
      */
     public function iDontSee($arg1)
     {
-        $element = $this->getSession()->getPage()->find('xpath', '//div[text()="'.$arg1.'"]');
+        $element = $this->getSession()->getPage()->find('xpath', '//div[text()="' . $arg1 . '"]');
         if (strpos('display: none', $element->getAttribute('style')) !== false) {
-            throw new \Exception("Element with text \"$arg1\" must be invisible");
+            throw new Exception("Element with text \"$arg1\" must be invisible");
         }
     }
 
@@ -132,7 +141,7 @@ class FeatureContext extends RawMinkContext
     {
         $element = $this->getSession()->getPage()->findById($this->button_id);
         if (!is_numeric($element->getHtml())) {
-            throw new \Exception('Label must be numeric');
+            throw new Exception('Label must be numeric');
         }
     }
 
@@ -150,12 +159,12 @@ class FeatureContext extends RawMinkContext
         //get modal
         $modal = $this->getSession()->getPage()->find('css', '.modal.transition.visible.active.top');
         if ($modal === null) {
-            throw new \Exception('No modal found');
+            throw new Exception('No modal found');
         }
         //find text in modal
-        $text = $modal->find('xpath', '//*[text()="'.$arg1.'"]');
+        $text = $modal->find('xpath', '//*[text()="' . $arg1 . '"]');
         if (!$text || $text->getText() != $arg1) {
-            throw new \Exception('No such text in modal');
+            throw new Exception('No such text in modal');
         }
     }
 
@@ -164,7 +173,8 @@ class FeatureContext extends RawMinkContext
      */
     public function progressBarShouldBeGoAllTheWay()
     {
-        /*$element =*/ $this->getSession()->getPage()->find('css', '.bar');
+        /*$element =*/
+        $this->getSession()->getPage()->find('css', '.bar');
         //TODO: zombiejs does not support sse :(
         //var_dump($element->getOuterHtml());
     }
@@ -176,27 +186,27 @@ class FeatureContext extends RawMinkContext
      */
     public function iSelectValueInLookup($arg1, $arg2)
     {
-        $field = $this->getSession()->getPage()->find('css', 'input[name='.$arg2.']');
+        $field = $this->getSession()->getPage()->find('css', 'input[name=' . $arg2 . ']');
         if ($field === null) {
-            throw new \Exception('Field not found: '.$arg2);
+            throw new Exception('Field not found: ' . $arg2);
         }
         //get dropdown item from semantic ui which is direct parent of input name field.
         $lookup = $field->getParent();
 
         //open dropdown from semantic-ui command. (just a click is not triggering it)
-        $script = '$("#'.$lookup->getAttribute('id').'").dropdown("show")';
+        $script = '$("#' . $lookup->getAttribute('id') . '").dropdown("show")';
         $this->getSession()->executeScript($script);
         //Wait till dropdown is visible
         //Cannot call jqueryWait because calling it will return prior from dropdown to fire ajax request.
-        $this->getSession()->wait(20000, '$("#'.$lookup->getAttribute('id').'").hasClass("visible")');
+        $this->getSession()->wait(20000, '$("#' . $lookup->getAttribute('id') . '").hasClass("visible")');
         //value should be available.
-        $value = $lookup->find('xpath', '//div[text()="'.$arg1.'"]');
+        $value = $lookup->find('xpath', '//div[text()="' . $arg1 . '"]');
         if (!$value || $value->getText() != $arg1) {
-            throw new \Exception('Value not found: '.$arg1);
+            throw new Exception('Value not found: ' . $arg1);
         }
         //When value are loaded, hide dropdown and select value from javascript.
-        $script = '$("#'.$lookup->getAttribute('id').'").dropdown("hide");';
-        $script .= '$("#'.$lookup->getAttribute('id').'").dropdown("set selected", '.$value->getAttribute('data-value').');';
+        $script = '$("#' . $lookup->getAttribute('id') . '").dropdown("hide");';
+        $script .= '$("#' . $lookup->getAttribute('id') . '").dropdown("set selected", ' . $value->getAttribute('data-value') . ');';
         $this->getSession()->executeScript($script);
     }
 
@@ -206,17 +216,7 @@ class FeatureContext extends RawMinkContext
     public function iTestJavascript()
     {
         $title = $this->getSession()->evaluateScript('return window.document.title;');
-        echo 'I\'m correctly on the webpage entitled "'.$title.'"';
-    }
-
-    /**
-     * Wait till jquery ajax request finished and no animation is perform.
-     *
-     * @param int $duration The maximum time to wait for the function.
-     */
-    protected function jqueryWait($duration = 1000)
-    {
-        $this->getSession()->wait($duration, '(0 === jQuery.active && 0 === jQuery(\':animated\').length)');
+        echo 'I\'m correctly on the webpage entitled "' . $title . '"';
     }
 
     /**
@@ -232,10 +232,10 @@ class FeatureContext extends RawMinkContext
         $session->evaluateScript('$.fn.extend({backspace:function(e,t){var n;return n=$.extend({callback:function(){},keypress:function(){},t:100,e:.04},t),this.each(function(){var t;t=this,$(t).queue(function(){var i,a;a=function(e,i){e?(t[/(np|x)/i.test(t.tagName)?"value":"innerHTML"]=t[/(np|x)/i.test(t.tagName)?"value":"innerHTML"].slice(0,-1),n.keypress.call(t),setTimeout(function(){a(e-1,i)},n.t)):(n.callback.call(t),$(t).dequeue())},i=function(e,a){e?(t[/(np|x)/i.test(t.tagName)?"value":"innerHTML"]+=e[0],n.keypress.call(t),setTimeout(function(){i(e.slice(1),a)},n.t)):a()},a(e)})})},typetype:function(e,t){var n;return n=$.extend({callback:function(){},keypress:function(){},t:100,e:.04},t),this.each(function(){var t;t=this,$(t).queue(function(){var i,a,c;a=function(e,i){e?(t[/(np|x)/i.test(t.tagName)?"value":"innerHTML"]=t[/(np|x)/i.test(t.tagName)?"value":"innerHTML"].slice(0,-1),n.keypress.call(t),setTimeout(function(){a(e-1,i)},n.t)):i()},i=function(e,a){e?(t[/(np|x)/i.test(t.tagName)?"value":"innerHTML"]+=e[0],n.keypress.call(t),setTimeout(function(){i(e.slice(1),a)},n.t)):a()},(c=function(u){var s,l;s=function(){return setTimeout(function(){c(u)},Math.random()*n.t*(e[u-1]===e[u]?1.6:"."===e[u-1]?12:"!"===e[u-1]?12:"?"===e[u-1]?12:"\n"===e[u-1]?12:","===e[u-1]?8:";"===e[u-1]?8:":"===e[u-1]?8:" "===e[u-1]?3:2))},l=Math.random()/n.e,e.length>=u?.3>l&&e[u-1]!==e[u]&&e.length>u+4?i(e.slice(u,u+4),function(){a(4,s)}):.7>l&&u>1&&/[A-Z]/.test(e[u-2]&&e.length>u+4)?i(e[u-1].toUpperCase()+e.slice(u,u+4),function(){a(5,s)}):.5>l&&e[u-1]!==e[u]&&e.length>u?i(e[u],function(){a(1,s)}):1>l&&e[u-1]!==e[u]&&e.length>u?i(e[u]+e[u-1],function(){a(2,s)}):.5>l&&/[A-Z]/.test(e[u])?i(e[u].toLowerCase(),function(){a(1,s)}):(t[/(np|x)/i.test(t.tagName)?"value":"innerHTML"]+=e[u-1],n.keypress.call(t),setTimeout(function(){c(u+1)},Math.random()*n.t*(e[u-1]===e[u]?1.6:"."===e[u-1]?12:"!"===e[u-1]?12:"?"===e[u-1]?12:"\n"===e[u-1]?12:","===e[u-1]?8:";"===e[u-1]?8:":"===e[u-1]?8:" "===e[u-1]?3:2))):(n.callback.call(t),$(t).dequeue())})(1)})})}});');
         //$element = $session->getPage()->find('css','div[id="'.$id.'"]');
         // get focus
-        $script = "$('#".$id."')[0].innerHTML = '".$text."';";
+        $script = "$('#" . $id . "')[0].innerHTML = '" . $text . "';";
 
         $session->executeScript($script);
-        $session->executeScript("$('#".$id."').trigger('keyup')");
+        $session->executeScript("$('#" . $id . "').trigger('keyup')");
     }
 
     /**
@@ -243,7 +243,7 @@ class FeatureContext extends RawMinkContext
      */
     public function iPressEditorButton($arg1)
     {
-        $button = $this->getSession()->getPage()->find('css','.'.$arg1);
+        $button = $this->getSession()->getPage()->find('css', '.' . $arg1);
         $button->click();
     }
 

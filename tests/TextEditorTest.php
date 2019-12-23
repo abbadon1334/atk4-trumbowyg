@@ -5,8 +5,9 @@ namespace atk4\ui\FormField;
 
 use atk4\ui\App;
 use atk4\ui\Layout\Centered;
+use PHPUnit_Framework_TestCase;
 
-class TextEditorTest extends \PHPUnit_Framework_TestCase
+class TextEditorTest extends PHPUnit_Framework_TestCase
 {
     public function testInit()
     {
@@ -24,7 +25,7 @@ class TextEditorTest extends \PHPUnit_Framework_TestCase
         $app->run();
         $rendered = ob_get_clean();
 
-        $this->assertNotFalse(strpos($rendered,'trumbowyg'));
+        $this->assertNotFalse(strpos($rendered, 'trumbowyg'));
     }
 
 
@@ -44,7 +45,7 @@ class TextEditorTest extends \PHPUnit_Framework_TestCase
         $app->run();
         $rendered = ob_get_clean();
 
-        $this->assertNotFalse(strpos($rendered,'trumbowyg'));
+        $this->assertNotFalse(strpos($rendered, 'trumbowyg'));
     }
 
     public function testPlugin()
@@ -66,6 +67,6 @@ class TextEditorTest extends \PHPUnit_Framework_TestCase
         $app->run();
         $rendered = ob_get_clean();
 
-        $this->assertNotFalse(strpos($rendered,'base64'));
+        $this->assertNotFalse(strpos($rendered, 'base64'));
     }
 }

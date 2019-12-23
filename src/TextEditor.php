@@ -3,28 +3,16 @@
 namespace atk4\ui\FormField;
 
 // @TODO find a better way to load assets
-// @TODO add realpath security check
 
 class TextEditor extends TextArea
 {
-    public $defaultTemplate = __DIR__ . '/../template/trumbowyg.html';
-
     private static $loaded_assets = [];
+    public $defaultTemplate = __DIR__ . '/../template/trumbowyg.html';
 
     //public $assets_path = '/assets';
     public $assets_path = "https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.20.0";
-
-    protected $required_js = [
-        '/trumbowyg.js',
-    ];
-
-    protected $required_css = [
-        '/ui/trumbowyg.css',
-    ];
-
     public $option_resetCss = true;
     public $option_autogrow = true;
-
     public $editor_options = [
         'btns' => [
             ['viewHTML'],
@@ -43,16 +31,20 @@ class TextEditor extends TextArea
         'resetCss' => true,
         'autogrow' => true
     ];
-
     public $plugins = [];
+    protected $required_js = [
+        '/trumbowyg.js',
+    ];
+    protected $required_css = [
+        '/ui/trumbowyg.css',
+    ];
 
     public function init()
     {
         parent::init();
 
         $this->addRequiredAssets();
-        foreach($this->plugins as $plugin)
-        {
+        foreach ($this->plugins as $plugin) {
             $this->addRequiredPlugin($plugin);
         }
         //$this->setStyle('display','block');
@@ -61,14 +53,14 @@ class TextEditor extends TextArea
         $this->editor_options['autogrow'] = $this->option_autogrow;
 
         $this->jsInput(true)->trumbowyg($this->editor_options);
-        $this->jsInput(true)->parent()->find('.trumbowyg-editor')->attr('id', $this->short_name.'-editor');
+        $this->jsInput(true)->parent()->find('.trumbowyg-editor')->attr('id', $this->short_name . '-editor');
     }
 
-    private function addRequiredAssets() :void
+    private function addRequiredAssets(): void
     {
         foreach ($this->required_js as $js) {
 
-            if($this->isAssetLoaded($js)) {
+            if ($this->isAssetLoaded($js)) {
                 continue;
             }
 
@@ -79,7 +71,7 @@ class TextEditor extends TextArea
 
         foreach ($this->required_css as $css) {
 
-            if($this->isAssetLoaded($css)) {
+            if ($this->isAssetLoaded($css)) {
                 continue;
             }
 
@@ -89,16 +81,16 @@ class TextEditor extends TextArea
         }
     }
 
-    private function isAssetLoaded($asset) :bool
+    private function isAssetLoaded($asset): bool
     {
-        return in_array($asset,self::$loaded_assets, false);
+        return in_array($asset, self::$loaded_assets, false);
     }
 
-    private function addRequiredPlugin($plugin_asset) :void
+    private function addRequiredPlugin($plugin_asset): void
     {
-        $plugin_asset = $this->assets_path . '/plugins/'.$plugin_asset;
+        $plugin_asset = $this->assets_path . '/plugins/' . $plugin_asset;
 
-        if($this->isAssetLoaded($plugin_asset)) {
+        if ($this->isAssetLoaded($plugin_asset)) {
             return;
         }
 
