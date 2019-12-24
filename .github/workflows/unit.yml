@@ -19,23 +19,24 @@ jobs:
           MYSQL_ROOT_PASSWORD: password
           DB_DATABASE: db
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=5
-      # Behat
-      behat:
-        hostname: behat
-        image: docksal/behat
-        volumes:
-          - .:/src
-        # Run a built-in web server for access to HTML reports
-        ports:
-          - 8000:8000
-          - 4444:4444
-        entrypoint: "php -S 0.0.0.0:8000"
-      # Selenium
-      browser:
-        hostname: browser
-        image: selenium/standalone-chrome
-        #image: selenium/standalone-firefox
     steps:
+      - name: install docker
+        run: |
+          apt install docker.io
+          curl -L "https://github.com/docker/compose/releases/download/1.23.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+          chmod +x /usr/local/bin/docker-compose
+
+      - name: Start DockerCompose
+        run: docker-compose -f docker-compose.yml -d
+
+      - name: Check running containers
+        run: docker ps -a
+
+      - name: Check logs
+        run: |
+          docker logs behat
+          docker logs web
+
       - name: Setup composer
         run: composer install
 
