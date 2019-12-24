@@ -19,21 +19,19 @@ jobs:
           MYSQL_ROOT_PASSWORD: password
           DB_DATABASE: db
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=5
+    behat:
+      image: docksal/behat
+      volumes:
+        - .:/src
+      # Run a built-in web server for access to HTML reports
+      ports:
+        - 4444:4444
+      # Selenium
+      browser:
+        image: selenium/standalone-chrome
     steps:
-      - name: install docker-compose
-        run: curl -L "https://github.com/docker/compose/releases/download/1.23.1/docker-compose-Linux-x86_64" -o /usr/local/bin/docker-compose
-          chmod +x /usr/local/bin/docker-compose
-
-      - name: Start DockerCompose
-        run: docker-compose -f docker-compose.yml -d
-
-      - name: Check running containers
-        run: docker ps -a
-
-      - name: Check logs
-        run: |
-          docker logs behat
-          docker logs web
+      - name: Start PHP BuiltIn Server
+        run: php -S 127.0.0.1:8000
 
       - name: Setup composer
         run: composer install
@@ -44,10 +42,11 @@ jobs:
           #mysql -uroot -ppassword -h mysql atk4 < demos/atk4.sql
           #mv demos/db.github.php demos/db.php
 
-      - name: Setup coverage / build folders
-        run: |
-          mkdir -p coverage
-          mkdir -p build
+      - name: Setup coverage folder
+        run: mkdir -p coverage
+
+      - name: Setup build folder
+        run: mkdir -p build
 
       - name: Unit Testing
         run: vendor/bin/phpunit --coverage-text --coverage-clover=coverage.xml
