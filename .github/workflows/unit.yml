@@ -20,8 +20,11 @@ jobs:
           DB_DATABASE: db
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=5
     steps:
+      - uses: actions/checkout@v1
+
       - name: Start DockerCompose
         run: docker-compose -f docker-compose.yml -d
+
       - name: Check running containers
         run: docker ps -a
 
