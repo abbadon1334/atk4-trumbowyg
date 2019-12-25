@@ -7,6 +7,8 @@ jobs:
   unit-test:
     name: Unit Testing
     runs-on: ubuntu-latest
+    container:
+      image: docksal/behat
     strategy:
       matrix:
         php: ['7.2', '7.3']
