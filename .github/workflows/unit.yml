@@ -32,17 +32,11 @@ jobs:
     steps:
       - uses: actions/checkout@v1
 
-      - name: Start PHP BuiltIn Server
-        run: php -S 127.0.0.1:8000 > /dev/null 2>&1 &
-
       - name: Install dependencies
         run: composer install --prefer-dist --no-progress --no-suggest
 
-      - name: Install dependencies and SQL
-        run: |
-          #mysql -uroot -ppassword -h mysql -e 'CREATE DATABASE atk4;'
-          #mysql -uroot -ppassword -h mysql atk4 < demos/atk4.sql
-          #mv demos/db.github.php demos/db.php
+      - name: Start PHP BuiltIn Server
+        run: php -S 127.0.0.1:8000 > /dev/null 2>&1 &
 
       - name: Setup coverage folder
         run: mkdir -p coverage
