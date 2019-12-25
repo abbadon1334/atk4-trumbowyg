@@ -8,7 +8,7 @@ jobs:
     name: Unit Testing
     runs-on: ubuntu-latest
     container:
-      image: docksal/behat
+      image: atk4/image:latest # https://github.com/atk4/image
     strategy:
       matrix:
         php: ['7.2', '7.3']
