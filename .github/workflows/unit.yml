@@ -33,7 +33,7 @@ jobs:
       - uses: actions/checkout@v1
 
       - name: Install simplexml
-        run: sudo apt-get install php-xml
+        run: apt-get install php-xml
 
       - name: Validate composer.json and composer.lock
         run: composer validate
