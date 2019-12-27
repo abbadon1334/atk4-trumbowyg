@@ -9,6 +9,9 @@ php:
 env:
   - DOCKER_COMPOSE_VERSION=1.24.1
 
+before_install:
+  - echo "memory_limit=2G" >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
+
 before_script:
   - curl -s http://getcomposer.org/installer | php
   - php composer.phar install -n
