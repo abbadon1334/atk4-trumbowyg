@@ -3,11 +3,11 @@
 namespace atk4\ui\FormField;
 
 
-use atk4\core\PHPUnit7_AgileTestCase;
 use atk4\ui\App;
 use atk4\ui\Layout\Centered;
+use PHPUnit_Framework_TestCase;
 
-class TextEditorTest extends PHPUnit7_AgileTestCase
+class TextEditorTest extends PHPUnit_Framework_TestCase
 {
     public function testInit()
     {

@@ -1,0 +1,38 @@
+language: php
+
+services:
+  - docker
+
+php:
+  - 7.2
+  - 7.3
+env:
+  - DOCKER_COMPOSE_VERSION=1.24.1
+
+before_install:
+  - echo "memory_limit=2G" >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
+  - sudo rm /usr/local/bin/docker-compose
+  - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
+  - chmod +x docker-compose
+  - sudo mv docker-compose /usr/local/bin
+  - docker-compose up -d
+  - travis_retry composer self-update
+  - composer install
+
+before_script:
+  - mkdir -p coverage/xml # Create a folder to store clover files #1
+  - mkdir -p build/logs # Create a folder to store clover files #2
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
+  - ./cc-test-reporter before-build
+
+script:
+  - docker exec atk4-trumbowyg_behat_1 vendor/bin/behat
+  - docker exec atk4-trumbowyg_behat_1 vendor/bin/phpunit
+
+after_script:
+  - mv build/logs/clover.xml coverage/
+  - ls -l coverage/
+  - vendor/bin/phpcov  merge coverage/ --clover build/logs/clover.xml
+  - php vendor/bin/codacycoverage clover build/logs/clover.xml
+  - ./cc-test-reporter after-build --coverage-input-type clover --exit-code $TRAVIS_TEST_RESULT

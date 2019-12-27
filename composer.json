@@ -14,8 +14,8 @@
     "atk4/ui": "2.*"
   },
   "require-dev": {
-    "phpunit/phpunit": "*",
-    "phpunit/phpcov": "*",
+    "phpunit/phpunit": "<6",
+    "phpunit/phpcov": "^3.0",
     "codeclimate/php-test-reporter": "*",
     "behat/behat": "*",
     "behat/mink-selenium2-driver": "^1.3",
