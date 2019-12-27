@@ -49,16 +49,14 @@ jobs:
         with:
           args: install
 
-      - name: PHPUnit testing
-        uses: docker://php:5.5
-        with:
-          args: php vendor/bin/phpunit
+      - name: Run Unit test
+        run: vendor/bin/phpunit
 
       - name: Run behat test
         run: docker exec behat vendor\bin\behat
 
       - name: Merge coverage logs
-        run: vendor/bin/phpcov merge build/logs/ --clover build/logs/cc.xml;
+        run: vendor/bin/phpcov merge build/logs/ --clover build/logs/cc.xml
 
       - uses: codecov/codecov-action@v1
         with:
