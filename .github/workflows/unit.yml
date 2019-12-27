@@ -30,9 +30,6 @@ jobs:
     steps:
       - uses: actions/checkout@v1
 
-      - name: Install simplexml
-        run: apt-get install php-xml
-
       - name: Validate composer.json and composer.lock
         run: composer validate
 
