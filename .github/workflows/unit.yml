@@ -9,7 +9,7 @@ jobs:
     strategy:
       matrix:
         operating-system: [ubuntu-18.04]
-        php: [ '7.2', '7.3', '7.4' ]
+        php: [ '7.2', '7.3' ]
     name: PHP ${{ matrix.php }}
     services:
       mysql:
