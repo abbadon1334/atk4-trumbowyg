@@ -28,13 +28,6 @@ jobs:
       browser:
         image: selenium/standalone-chrome
     steps:
-      - uses: actions/checkout@v1
-
-      - name: Validate composer.json and composer.lock
-        run: composer validate
-
-      - name: Install dependencies
-        run: composer install --prefer-dist --no-progress --no-suggest
 
       - name: Start PHP BuiltIn Server
         run: php -S 127.0.0.1:8000 > /dev/null 2>&1 &
@@ -45,8 +38,11 @@ jobs:
       - name: Setup build folder
         run: mkdir -p build
 
-      - name: Unit Testing
-        run: php vendor/bin/phpunit
+      - uses: actions/checkout@v1
+
+      - uses: php-actions/composer@v1
+
+      - uses: php-actions/phpunit@v1
 
       - name: Run behat test
         run: docker exec behat vendor\bin\behat
