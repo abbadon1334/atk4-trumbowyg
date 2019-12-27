@@ -16,10 +16,10 @@ before_install:
   - chmod +x docker-compose
   - sudo mv docker-compose /usr/local/bin
   - docker-compose up -d
+  - travis_retry composer self-update
+  - composer install
 
 before_script:
-  - curl -s http://getcomposer.org/installer | php
-  - php composer.phar install -n
   - mkdir -p coverage/xml # Create a folder to store clover files #1
   - mkdir -p build/logs # Create a folder to store clover files #2
   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
@@ -27,7 +27,7 @@ before_script:
   - ./cc-test-reporter before-build
 
 script:
-  - php vendor/bin/phpunit --coverage-clover build/logs/clover.xml
+  - phpunit --coverage-clover build/logs/clover.xml
   - docker exec atk4-trumbowyg_behat_1 vendor/bin/behat
 
 after_script:
