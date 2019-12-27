@@ -40,7 +40,10 @@ jobs:
 
       - uses: actions/checkout@v1
 
-      - uses: php-actions/composer@v1
+      - name: Composer Action
+        uses: MilesChou/composer-action@v1.0.1
+        with:
+          args: install
 
       - uses: php-actions/phpunit@v1
 
