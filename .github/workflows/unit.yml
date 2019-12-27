@@ -45,7 +45,10 @@ jobs:
         with:
           args: install
 
-      - uses: php-actions/phpunit@v1
+      - name: PHPUnit testing
+        uses: docker://php:5.5
+        with:
+          args: php vendor/bin/phpunit
 
       - name: Run behat test
         run: docker exec behat vendor\bin\behat
