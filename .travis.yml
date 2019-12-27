@@ -27,7 +27,7 @@ before_script:
   - ./cc-test-reporter before-build
 
 script:
-  - vendor/bin/phpunit
+  - php vendor/bin/phpunit --coverage-clover build/logs/clover.xml
   - docker exec atk4-trumbowyg_behat_1 vendor/bin/behat
 
 after_script:
