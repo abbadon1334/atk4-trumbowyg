@@ -46,7 +46,7 @@ jobs:
         run: mkdir -p build
 
       - name: Unit Testing
-        run: php vendor/bin/phpunit --coverage-clover coverage.xml
+        run: php vendor/bin/phpunit
 
       - name: Run behat test
         run: docker exec behat vendor\bin\behat
