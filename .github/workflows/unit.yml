@@ -4,12 +4,13 @@ on:
   pull_request
 
 jobs:
-  unit-test:
-    name: Unit Testing
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        php: ['7.2', '7.3']
+  build:
+    runs-on: ${{ matrix.operating-system }}
+      strategy:
+        matrix:
+          operating-system: [ubuntu-18.04]
+          php: [ '7.2', '7.3', '7.4' ]
+    name: PHP ${{ matrix.php }}
     services:
       mysql:
         image: mysql:5.7
@@ -28,7 +29,10 @@ jobs:
       browser:
         image: selenium/standalone-chrome
     steps:
-
+      - name: Setup PHP
+        uses: nanasess/setup-php@master
+        with:
+          php-version: ${{ matrix.php }}
       - name: Start PHP BuiltIn Server
         run: php -S 127.0.0.1:8000 > /dev/null 2>&1 &
 
