@@ -13,7 +13,7 @@
     "atk4/ui": "^1.7.1"
   },
   "require-dev": {
-    "phpunit/phpunit": "<6",
+    "phpunit/phpunit": "9.5.5",
     "phpunit/phpcov": "^3.0",
     "codeclimate/php-test-reporter": "*",
     "behat/behat": "^3.4",
