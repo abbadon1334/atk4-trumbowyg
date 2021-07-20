@@ -1,25 +1,27 @@
 <?php
-include '../vendor/autoload.php';
 
-use atk4\ui\App;
-use atk4\ui\Form\Control\TextEditor;
+declare(strict_types=1);
+
+include __DIR__ . '/init-app.php';
+
+use Atk4\Ui\App;
+use Atk4\Ui\Layout\Centered;
 
 $app = new App([
     'title' => 'Agile toolkit WYSIWYG',
-    'call_exit' => false
+    'call_exit' => false,
 ]);
-$app->initLayout([\Atk4\Ui\Layout\Centered::class]);
+$app->initLayout([Centered::class]);
 
-/** @var \atk4\ui\Form $form */
-$form = $app->add('Form');
+$form = \Atk4\Ui\Form::addTo($app);
 $form->addControl('subject');
 $form->addControl('editor', [
     \Atk4\Ui\Form\Control\TextEditor::class,
-    'placeholder' => 'test placeholder'
+    'placeholder' => 'test placeholder',
 ]);
 
-$form->onSubmit(function($f) {
-    $view = new \atk4\ui\Message();
+$form->onSubmit(function ($f) {
+    $view = new \Atk4\Ui\Message();
     $view->invokeInit();
     $view->text->addParagraph('subject : ' . $f->model->get('subject'));
     $view->text->addParagraph('editor : ' . $f->model->get('editor'));

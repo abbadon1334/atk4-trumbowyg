@@ -2,9 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Atk4\Login\Demos;
-
-include __DIR__ . '/../../vendor/autoload.php';
+require __DIR__ . '/../init-app.php';
 
 $sqliteFile = __DIR__ . '/db.sqlite';
 if (file_exists($sqliteFile)) {

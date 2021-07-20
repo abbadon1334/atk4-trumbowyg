@@ -1,10 +1,10 @@
 default:
   suites:
-    atk4_login:
+    atk4_editor:
       paths:
         features: '%paths.base%/tests-behat'
       contexts:
-        - TextEditor\Behat\FeatureContext
+        - TextEditor\Behat\Context
         - Behat\MinkExtension\Context\MinkContext
   extensions:
     Behat\MinkExtension:

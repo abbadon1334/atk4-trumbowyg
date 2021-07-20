@@ -1,7 +1,6 @@
 {
   "name": "abbadon1334/atk4-trumbowyg",
   "description": "ATK4 WYSIWYG editor using javascript library trumbowyg",
-  "minimum-stability": "dev",
   "license": "MIT",
   "authors": [
     {
@@ -29,13 +28,15 @@
   },
   "autoload": {
     "psr-4": {
-      "Atk4\\Ui\\Form\\Control\\":"src/"
+      "Atk4\\Ui\\Form\\Control\\": "src/"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "TextEditor\\Tests\\":"tests/",
+      "TextEditor\\Tests\\": "tests/",
       "TextEditor\\Behat\\": "tests-behat/Bootstrap/"
     }
-  }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
 }

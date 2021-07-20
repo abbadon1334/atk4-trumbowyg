@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Atk4\Ui\Form\Control;
 
 // @TODO find a better way to load assets
@@ -10,7 +12,7 @@ class TextEditor extends Textarea
     public $defaultTemplate = __DIR__ . '/../template/trumbowyg.html';
 
     //public $assets_path = '/assets';
-    public $assets_path = "https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.20.0";
+    public $assets_path = 'https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.20.0';
     public $option_resetCss = true;
     public $option_autogrow = true;
     public $editor_options = [
@@ -26,10 +28,10 @@ class TextEditor extends Textarea
             ['unorderedList', 'orderedList'],
             ['horizontalRule'],
             ['removeformat'],
-            ['fullscreen']
+            ['fullscreen'],
         ],
         'resetCss' => true,
-        'autogrow' => true
+        'autogrow' => true,
     ];
     public $plugins = [];
     protected $required_js = [
@@ -39,7 +41,7 @@ class TextEditor extends Textarea
         '/ui/trumbowyg.css',
     ];
 
-    protected function init() : void
+    protected function init(): void
     {
         parent::init();
 
@@ -52,14 +54,14 @@ class TextEditor extends Textarea
         $this->editor_options['resetCss'] = $this->option_resetCss;
         $this->editor_options['autogrow'] = $this->option_autogrow;
 
-        $this->jsInput(true)->trumbowyg($this->editor_options);
-        $this->jsInput(true)->parent()->find('.trumbowyg-editor')->attr('id', $this->short_name . '-editor');
+        $jsInput = $this->jsInput(true);
+        $jsInput->trumbowyg($this->editor_options); // @phpstan-ignore-line
+        $jsInput->parent()->find('.trumbowyg-editor')->attr('id', $this->short_name . '-editor');
     }
 
     private function addRequiredAssets(): void
     {
         foreach ($this->required_js as $js) {
-
             if ($this->isAssetLoaded($js)) {
                 continue;
             }
@@ -70,7 +72,6 @@ class TextEditor extends Textarea
         }
 
         foreach ($this->required_css as $css) {
-
             if ($this->isAssetLoaded($css)) {
                 continue;
             }

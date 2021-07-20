@@ -170,6 +170,7 @@ jobs:
           echo "::set-output name=dir::$(composer config cache-files-dir)"
 
       - name: Setup cache 2/2
+        if: ${{ !env.ACT }}
         uses: actions/cache@v1
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
