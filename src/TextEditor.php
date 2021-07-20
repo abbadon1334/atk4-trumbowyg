@@ -1,10 +1,10 @@
 <?php
 
-namespace atk4\ui\FormField;
+namespace Atk4\Ui\Form\Control;
 
 // @TODO find a better way to load assets
 
-class TextEditor extends TextArea
+class TextEditor extends Textarea
 {
     private static $loaded_assets = [];
     public $defaultTemplate = __DIR__ . '/../template/trumbowyg.html';
@@ -39,7 +39,7 @@ class TextEditor extends TextArea
         '/ui/trumbowyg.css',
     ];
 
-    public function init()
+    protected function init() : void
     {
         parent::init();
 
@@ -66,7 +66,7 @@ class TextEditor extends TextArea
 
             self::$loaded_assets[] = $js;
 
-            $this->app->requireJS($this->assets_path . $js);
+            $this->getApp()->requireJS($this->assets_path . $js);
         }
 
         foreach ($this->required_css as $css) {
@@ -77,7 +77,7 @@ class TextEditor extends TextArea
 
             self::$loaded_assets[] = $css;
 
-            $this->app->requireCSS($this->assets_path . $css);
+            $this->getApp()->requireCSS($this->assets_path . $css);
         }
     }
 
@@ -96,6 +96,6 @@ class TextEditor extends TextArea
 
         self::$loaded_assets[] = $plugin_asset;
 
-        $this->app->requireJS($plugin_asset);
+        $this->getApp()->requireJS($plugin_asset);
     }
 }

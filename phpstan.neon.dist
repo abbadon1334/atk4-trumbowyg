@@ -1,0 +1,14 @@
+includes:
+    - vendor/mahalux/atk4-hintable/phpstan-ext.neon
+
+parameters:
+    level: 4
+    paths:
+        - ./
+    excludes_analyse:
+        - cache/
+        - build/
+        - vendor/
+
+    # TODO review once we drop PHP 7.x support
+    treatPhpDocTypesAsCertain: false

@@ -1,5 +1,7 @@
 <?php
 
+namespace TextEditor\Behat;
+
 use Behat\Behat\Hook\Scope\AfterStepScope;
 use Behat\Mink\Driver\Selenium2Driver;
 use Behat\Mink\Exception\DriverException;
