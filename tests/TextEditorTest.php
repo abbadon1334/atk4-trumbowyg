@@ -29,16 +29,16 @@ class TextEditorTest extends AtkPhpunit\TestCase
         ]);
         $app->run();
 
-        $this->assertEquals(1, preg_match('/trumbowyg/m', $app->output));
+        $this->assertSame(1, preg_match('/trumbowyg/m', $app->output));
     }
 
     public function testPlugin()
     {
         $app = new AppFormTestMock([
-            'catch_exceptions'        => false,
-            'always_run'              => false,
+            'catch_exceptions' => false,
+            'always_run' => false,
             'catch_runaway_callbacks' => false,
-            'call_exit'               => false,
+            'call_exit' => false,
         ]);
 
         $app->initLayout([Centered::class]);
@@ -47,13 +47,13 @@ class TextEditorTest extends AtkPhpunit\TestCase
         $form->addControl('editor', [
             TextEditor::class,
             'placeholder' => 'test placeholder',
-            'plugins'     => [
+            'plugins' => [
                 'base64',
             ],
         ]);
         $app->run();
 
-        $this->assertEquals(1, preg_match('/base64/m', $app->output));
+        $this->assertSame(1, preg_match('/base64/m', $app->output));
     }
 }
 

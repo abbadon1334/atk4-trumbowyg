@@ -2,7 +2,11 @@
 
 declare(strict_types=1);
 
-include __DIR__ . '/init-app.php';
+namespace Atk4\Ui\Demos;
+
+date_default_timezone_set('UTC');
+
+require_once __DIR__ . '/../vendor/autoload.php';
 
 use Atk4\Ui\App;
 use Atk4\Ui\Layout\Centered;
