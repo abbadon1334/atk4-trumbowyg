@@ -29,28 +29,31 @@ class TextEditorTest extends AtkPhpunit\TestCase
         ]);
         $app->run();
 
-        $this->assertGreaterThan(0, preg_match('/trumbowyg/', $app->output));
+        $this->assertEquals(1, preg_match('/trumbowyg/m', $app->output));
     }
 
     public function testPlugin()
     {
         $app = new AppFormTestMock([
-            'always_run' => false,
-            'call_exit' => false,
+            'catch_exceptions'        => false,
+            'always_run'              => false,
+            'catch_runaway_callbacks' => false,
+            'call_exit'               => false,
         ]);
+
         $app->initLayout([Centered::class]);
         $form = Form::addTo($app);
         $form->addControl('subject');
         $form->addControl('editor', [
             TextEditor::class,
             'placeholder' => 'test placeholder',
-            'plugins' => [
+            'plugins'     => [
                 'base64',
             ],
         ]);
         $app->run();
 
-        $this->assertGreaterThan(0, preg_match('/base64/', $app->output));
+        $this->assertEquals(1, preg_match('/base64/m', $app->output));
     }
 }
 

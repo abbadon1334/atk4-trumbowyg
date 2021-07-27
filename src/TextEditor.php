@@ -8,7 +8,6 @@ namespace Atk4\Ui\Form\Control;
 
 class TextEditor extends Textarea
 {
-    private static $loaded_assets = [];
     public $defaultTemplate = __DIR__ . '/../template/trumbowyg.html';
 
     //public $assets_path = '/assets';
@@ -62,40 +61,17 @@ class TextEditor extends Textarea
     private function addRequiredAssets(): void
     {
         foreach ($this->required_js as $js) {
-            if ($this->isAssetLoaded($js)) {
-                continue;
-            }
-
-            self::$loaded_assets[] = $js;
-
             $this->getApp()->requireJS($this->assets_path . $js);
         }
 
         foreach ($this->required_css as $css) {
-            if ($this->isAssetLoaded($css)) {
-                continue;
-            }
-
-            self::$loaded_assets[] = $css;
-
             $this->getApp()->requireCSS($this->assets_path . $css);
         }
-    }
-
-    private function isAssetLoaded($asset): bool
-    {
-        return in_array($asset, self::$loaded_assets, false);
     }
 
     private function addRequiredPlugin($plugin_asset): void
     {
         $plugin_asset = $this->assets_path . '/plugins/' . $plugin_asset;
-
-        if ($this->isAssetLoaded($plugin_asset)) {
-            return;
-        }
-
-        self::$loaded_assets[] = $plugin_asset;
 
         $this->getApp()->requireJS($plugin_asset);
     }
