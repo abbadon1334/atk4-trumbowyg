@@ -1,29 +1,21 @@
 <?php
 
-namespace atk4\ui\FormField;
+declare(strict_types=1);
+
+namespace Atk4\Ui\Form\Control;
 
 // @TODO find a better way to load assets
-// @TODO add realpath security check
 
-class TextEditor extends TextArea
+class TextEditor extends Textarea
 {
-    public $defaultTemplate = __DIR__ . '/../template/trumbowyg.html';
-
     private static $loaded_assets = [];
 
-    public $assets_path = '/assets';
+    public $defaultTemplate = __DIR__ . '/../template/trumbowyg.html';
 
-    protected $required_js = [
-        '/trumbowyg.js',
-    ];
-
-    protected $required_css = [
-        '/ui/trumbowyg.css',
-    ];
-
+    //public $assets_path = '/assets';
+    public $assets_path = 'https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.20.0';
     public $option_resetCss = true;
     public $option_autogrow = true;
-
     public $editor_options = [
         'btns' => [
             ['viewHTML'],
@@ -37,21 +29,25 @@ class TextEditor extends TextArea
             ['unorderedList', 'orderedList'],
             ['horizontalRule'],
             ['removeformat'],
-            ['fullscreen']
+            ['fullscreen'],
         ],
         'resetCss' => true,
-        'autogrow' => true
+        'autogrow' => true,
+    ];
+    public $plugins = [];
+    protected $required_js = [
+        '/trumbowyg.js',
+    ];
+    protected $required_css = [
+        '/ui/trumbowyg.css',
     ];
 
-    public $plugins = [];
-
-    public function init()
+    protected function init(): void
     {
         parent::init();
 
         $this->addRequiredAssets();
-        foreach($this->plugins as $plugin)
-        {
+        foreach ($this->plugins as $plugin) {
             $this->addRequiredPlugin($plugin);
         }
         //$this->setStyle('display','block');
@@ -59,49 +55,49 @@ class TextEditor extends TextArea
         $this->editor_options['resetCss'] = $this->option_resetCss;
         $this->editor_options['autogrow'] = $this->option_autogrow;
 
-        $this->jsInput(true)->trumbowyg($this->editor_options);
+        $jsInput = $this->jsInput(true);
+        $jsInput->trumbowyg($this->editor_options); // @phpstan-ignore-line
+        $jsInput->parent()->find('.trumbowyg-editor')->attr('id', $this->short_name . '-editor');
     }
 
-    private function addRequiredAssets() :void
+    private function addRequiredAssets(): void
     {
         foreach ($this->required_js as $js) {
-
-            if($this->isAssetLoaded($js)) {
+            if ($this->isAssetLoaded($js)) {
                 continue;
             }
 
             self::$loaded_assets[] = $js;
 
-            $this->app->requireJS($this->assets_path . $js);
+            $this->getApp()->requireJS($this->assets_path . $js);
         }
 
         foreach ($this->required_css as $css) {
-
-            if($this->isAssetLoaded($css)) {
+            if ($this->isAssetLoaded($css)) {
                 continue;
             }
 
             self::$loaded_assets[] = $css;
 
-            $this->app->requireCSS($this->assets_path . $css);
+            $this->getApp()->requireCSS($this->assets_path . $css);
         }
     }
 
-    private function isAssetLoaded($asset) :bool
+    private function isAssetLoaded($asset): bool
     {
-        return in_array($asset,self::$loaded_assets, false);
+        return in_array($asset, self::$loaded_assets, false);
     }
 
-    private function addRequiredPlugin($plugin_asset) :void
+    private function addRequiredPlugin($plugin_asset): void
     {
-        $plugin_asset = $this->assets_path . '/plugins/'.$plugin_asset;
+        $plugin_asset = $this->assets_path . '/plugins/' . $plugin_asset;
 
-        if($this->isAssetLoaded($plugin_asset)) {
+        if ($this->isAssetLoaded($plugin_asset)) {
             return;
         }
 
         self::$loaded_assets[] = $plugin_asset;
 
-        $this->app->requireJS($plugin_asset);
+        $this->getApp()->requireJS($plugin_asset);
     }
 }
