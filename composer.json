@@ -13,13 +13,13 @@
         "atk4/ui": "2.4"
     },
     "require-dev": {
-        "behat/behat": "^3.8",
-        "behat/mink": "^1.8",
-        "behat/mink-extension": "^2.3.1",
-        "behat/mink-selenium2-driver": "^1.4",
+        "behat/behat": "3.8.1",
+        "behat/mink": "1.8.1",
+        "behat/mink-extension": "2.3.1",
+        "behat/mink-selenium2-driver": "1.4.0",
         "friendsofphp/php-cs-fixer": "3.0.0",
-        "phpstan/phpstan": "^0.12.82",
-        "phpunit/phpunit": ">=9.3"
+        "phpstan/phpstan": "0.12.94",
+        "phpunit/phpunit": "9.5.8"
     },
     "autoload": {
         "psr-4": {
