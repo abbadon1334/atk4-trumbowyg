@@ -12,7 +12,7 @@ use Atk4\Ui\Layout\Centered;
 
 class TextEditorTest extends TestCase
 {
-    public function testInit()
+    public function testInit(): void
     {
         $app = new AppFormTestMock([
             'catch_exceptions' => false,
@@ -32,7 +32,7 @@ class TextEditorTest extends TestCase
         $this->assertSame(1, preg_match('/trumbowyg/m', $app->output));
     }
 
-    public function testPlugin()
+    public function testPlugin(): void
     {
         $app = new AppFormTestMock([
             'catch_exceptions' => false,
@@ -59,7 +59,7 @@ class TextEditorTest extends TestCase
 
 class AppFormTestMock extends App
 {
-    public $output;
+    public string $output;
 
     protected function outputResponse(string $data, array $headers): void
     {
