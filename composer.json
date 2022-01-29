@@ -2,6 +2,7 @@
     "name": "abbadon1334/atk4-trumbowyg",
     "description": "ATK4 WYSIWYG editor using javascript library trumbowyg",
     "license": "MIT",
+    "type": "library",
     "authors": [
         {
             "name": "Francesco Danti",
@@ -32,6 +33,8 @@
         "symfony/console": "^4.4.30 || ^5.3.7",
         "symfony/css-selector": "^4.4.24 || ^5.2.9"
     },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
     "autoload": {
         "psr-4": {
             "Atk4\\Ui\\Form\\Control\\": "src/"
@@ -43,6 +46,7 @@
             "TextEditor\\Behat\\": "tests-behat/Bootstrap/"
         }
     },
-    "minimum-stability": "dev",
-    "prefer-stable": true
+    "config": {
+        "sort-packages": true
+    }
 }
