@@ -24,7 +24,7 @@ class Context extends \Atk4\Ui\Behat\Context
     /**
      * @When I press editor button with class :arg1
      */
-    public function iPressEditorButtonByClass($arg1): void
+    public function iPressEditorButtonByClass(string $arg1): void
     {
         $button = $this->getSession()->getPage()->find('css', '.' . $arg1);
         $button->click();
