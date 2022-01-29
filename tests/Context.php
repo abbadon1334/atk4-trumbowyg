@@ -23,7 +23,12 @@ class Context extends \Atk4\Ui\Behat\Context
         $session->executeScript("$('#" . $id . "').trigger('keyup')");
     }
 
-    public function modalIsOpenWithText(string $text, string $tag = 'div'): void
+    /**
+     * @Then Modal Editor is open with text :arg1
+     *
+     * Check if text is present in modal or dynamic modal.
+     */
+    public function editorModalIsOpenWithText(string $text): void
     {
         //wait until modal open
         $this->getSession()->wait(2000, '$(".modal.transition.visible.active").length');
