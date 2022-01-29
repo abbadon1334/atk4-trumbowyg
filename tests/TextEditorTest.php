@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace TextEditor\Tests;
 
-use Atk4\Core\AtkPhpunit;
+use Atk4\Data\Schema\TestCase;
 use Atk4\Ui\App;
 use Atk4\Ui\Form;
 use Atk4\Ui\Form\Control\TextEditor;
 use Atk4\Ui\Layout\Centered;
 
-class TextEditorTest extends AtkPhpunit\TestCase
+class TextEditorTest extends TestCase
 {
     public function testInit()
     {
