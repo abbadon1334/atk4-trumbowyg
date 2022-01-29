@@ -42,11 +42,14 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "TextEditor\\Tests\\": "tests/",
-            "TextEditor\\Behat\\": "tests-behat/Bootstrap/"
+            "Atk4\\Ui\\Component\\Tests\\": "tests/",
+            "Atk4\\Ui\\Component\\Behat\\": "tests-behat/"
         }
     },
     "config": {
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "ergebnis/composer-normalize": true
+        }
     }
 }

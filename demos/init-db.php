@@ -4,7 +4,7 @@
 
 declare(strict_types=1);
 
-namespace Atk4\Ui\Demos;
+namespace Atk4\Ui\Component\Demos;
 
 try {
     require_once file_exists(__DIR__ . '/db.php')

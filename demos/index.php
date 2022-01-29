@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Atk4\Ui\Demos;
+namespace Atk4\Ui\Component\Demos;
 
-use Atk4\Ui\Demos\Model\Post;
+use Atk4\Ui\Component\Demos\Model\Post;
 use Atk4\Ui\Layout\Centered;
 
 date_default_timezone_set('UTC');

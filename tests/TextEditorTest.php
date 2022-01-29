@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace TextEditor\Tests;
+namespace Atk4\Ui\Component\Tests;
 
 use Atk4\Data\Schema\TestCase;
 use Atk4\Ui\App;
@@ -12,48 +12,95 @@ use Atk4\Ui\Layout\Centered;
 
 class TextEditorTest extends TestCase
 {
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $reflectedClass = new \ReflectionClass(TextEditor::class);
+        $reflectedClass->setStaticPropertyValue('loaded_assets', []);
+    }
+
     public function testInit(): void
     {
-        $app = new AppFormTestMock([
-            'catch_exceptions' => false,
-            'always_run' => false,
-            'catch_runaway_callbacks' => false,
-            'call_exit' => false,
-        ]);
-        $app->initLayout([Centered::class]);
-        $form = Form::addTo($app);
-        $form->addControl('subject');
-        $form->addControl('editor', [
-            TextEditor::class,
-            'placeholder' => 'test placeholder',
-        ]);
-        $app->run();
+        ob_start();
+        try {
+            $app = $this->getApp();
 
-        $this->assertSame(1, preg_match('/trumbowyg/m', $app->output));
+            $app->initLayout([Centered::class]);
+
+            $form = Form::addTo($app);
+            $form->addControl('subject');
+            $form->addControl('editor', [
+                TextEditor::class,
+                'placeholder' => 'test placeholder',
+            ]);
+            $app->run();
+        } finally {
+            $output = ob_get_clean();
+        }
+
+        $this->assertSame(1, substr_count($output, '/libs/Trumbowyg/2.20.0/trumbowyg.js'));
+    }
+
+    public function testCheckDouble(): void
+    {
+        ob_start();
+        try {
+            $app = $this->getApp();
+
+            $app->initLayout([Centered::class]);
+
+            $form = Form::addTo($app);
+            $form->addControl('subject');
+            $form->addControl('editor', [
+                TextEditor::class,
+                'placeholder' => 'test placeholder',
+            ]);
+            $form->addControl('editor2', [
+                TextEditor::class,
+                'placeholder' => 'test placeholder',
+            ]);
+            $app->run();
+        } finally {
+            $output = ob_get_clean();
+        }
+
+        $this->assertSame(1, substr_count($output, '/libs/Trumbowyg/2.20.0/trumbowyg.js'));
     }
 
     public function testPlugin(): void
     {
-        $app = new AppFormTestMock([
+        ob_start();
+        try {
+            $app = $this->getApp();
+
+            $app->initLayout([Centered::class]);
+
+            $form = Form::addTo($app);
+            $form->addControl('subject');
+            $form->addControl('editor', [
+                TextEditor::class,
+                'placeholder' => 'test placeholder',
+                'plugins' => [
+                    'base64',
+                ],
+            ]);
+            $app->run();
+        } finally {
+            $output = ob_get_clean();
+        }
+
+        $this->assertStringContainsString('plugins/base64', $output);
+    }
+
+    private function getApp(): App
+    {
+        return new App([
             'catch_exceptions' => false,
             'always_run' => false,
             'catch_runaway_callbacks' => false,
             'call_exit' => false,
         ]);
-
-        $app->initLayout([Centered::class]);
-        $form = Form::addTo($app);
-        $form->addControl('subject');
-        $form->addControl('editor', [
-            TextEditor::class,
-            'placeholder' => 'test placeholder',
-            'plugins' => [
-                'base64',
-            ],
-        ]);
-        $app->run();
-
-        $this->assertSame(1, preg_match('/base64/m', $app->output));
     }
 }
 

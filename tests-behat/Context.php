@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace TextEditor\Tests;
+namespace Atk4\Ui\Component\Behat;
 
 use Behat\Mink\Element\NodeElement;
 
