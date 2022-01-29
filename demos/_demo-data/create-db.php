@@ -6,7 +6,7 @@ namespace Atk4\Ui\Component\Demos;
 
 use Atk4\Data\Persistence;
 use Atk4\Data\Schema\Migrator;
-use Atk4\Ui\Demos\Model\Post;
+use Atk4\Ui\Component\Demos\Model\Post;
 
 require_once __DIR__ . '/../init-autoloader.php';
 
