@@ -1,13 +1,14 @@
 Feature: Editor
+  Check basic functionalities
 
-  Scenario: Test init
+  Scenario:
     Given I am on "index.php"
     When I fill in "subject" with "the subject"
     When I type in editor "editor-editor" with text "editor content"
     When I use form with button "Save"
     Then Modal opens with text "editor : editor content"
 
-  Scenario: Test see html
+  Scenario:
     Given I am on "index.php"
     When I fill in "subject" with "the subject"
     When I type in editor "editor-editor" with text "editor content"
