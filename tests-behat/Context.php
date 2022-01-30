@@ -11,9 +11,7 @@ class Context extends \Atk4\Ui\Behat\Context
      */
     public function iTypeInEditor(string $id, string $text): void
     {
-        $session = $this->getSession();
-
-        $session->executeScript("$('#" . $id . "-editor').html('" . $text . "')");
+        $this->getSession()->executeScript("$('#" . $id . "-editor').html('" . $text . "')");
     }
 
     /**
