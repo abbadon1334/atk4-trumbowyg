@@ -21,7 +21,7 @@ Feature: Editor
     When I type in editor "body" with text "editor content"
     When I press button "Save"
     Then I wait 1000 ms
-    Then Modal is open with text "editor error content" in tag "*"
+    Then Modal is open with text "body : &lt;p&gt;editor content&lt;/p&gt;" in tag "*"
 
   Scenario:
     Given I am on "index.php"
@@ -39,4 +39,4 @@ Feature: Editor
     When I click first element using class ".trumbowyg-viewHTML-button"
     When I press button "Save"
     Then I wait 1000 ms
-    Then Modal is open with raw text "body : <p>editor error content</p>" in tag "p"
+    Then Modal is open with raw text "body : &lt;p&gt;editor content&lt;/p&gt;" in tag "p"
