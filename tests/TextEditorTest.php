@@ -39,8 +39,8 @@ class TextEditorTest extends TestCase
             $output = ob_get_clean();
         }
 
-        $this->assertSame(1, substr_count($output, (new TextEditor())->assets_path.'/trumbowyg.js'));
-        $this->assertSame(1, substr_count($output, (new TextEditor())->assets_path.'/ui/trumbowyg.css'));
+        $this->assertSame(1, substr_count($output, (new TextEditor())->assets_path . '/trumbowyg.js'));
+        $this->assertSame(1, substr_count($output, (new TextEditor())->assets_path . '/ui/trumbowyg.css'));
     }
 
     public function testCheckDouble(): void
@@ -66,8 +66,8 @@ class TextEditorTest extends TestCase
             $output = ob_get_clean();
         }
 
-        $this->assertSame(1, substr_count($output, (new TextEditor())->assets_path.'/trumbowyg.js'));
-        $this->assertSame(1, substr_count($output, (new TextEditor())->assets_path.'/ui/trumbowyg.css'));
+        $this->assertSame(1, substr_count($output, (new TextEditor())->assets_path . '/trumbowyg.js'));
+        $this->assertSame(1, substr_count($output, (new TextEditor())->assets_path . '/ui/trumbowyg.css'));
     }
 
     public function testPlugin(): void
