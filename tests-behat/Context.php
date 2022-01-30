@@ -35,8 +35,9 @@ class Context extends \Atk4\Ui\Behat\Context
      */
     public function iCheckIfEditorValueMatchesText(string $selector, string $text): void
     {
-        $element = $this->getElementInPage($selector);
-        $value = trim($element->getValue());
+        $this->getElementInPage($selector); // exception if not found
+
+        $value = $this->getSession()->evaluateScript("return $('" . $selector . "]').val()");
 
         if (empty($value)) {
             throw new \Exception('Editor value is empty');
