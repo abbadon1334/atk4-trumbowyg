@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Atk4\TextEditor\Behat;
 
-use Behat\Mink\Element\NodeElement;
-
 class Context extends \Atk4\Ui\Behat\Context
 {
     /**

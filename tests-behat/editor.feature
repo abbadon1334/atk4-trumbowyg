@@ -1,5 +1,6 @@
 Feature: Editor
-  Check basic functionalities
+  Check after save
+  Check after save html
 
   Scenario:
     Given I am on "index.php"
