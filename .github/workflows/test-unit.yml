@@ -2,6 +2,7 @@ name: Unit
 
 on:
   pull_request:
+    types: [opened, reopened]
   push:
   schedule:
     - cron: '0 0/2 * * *'

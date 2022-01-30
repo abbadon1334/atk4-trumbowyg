@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Atk4\TextEditor\Behat;
 
+use Behat\Behat\Tester\Exception\PendingException;
+
 class Context extends \Atk4\Ui\Behat\Context
 {
     /**
@@ -28,5 +30,21 @@ class Context extends \Atk4\Ui\Behat\Context
     {
         $modal = $this->getElementInPage('.modal.visible.active.front');
         $this->getElementInElement($modal, '//' . $tag . '[text()["' . $text . '"]]', 'xpath');
+    }
+
+    /**
+     * @Then /^Editor "([^"]*)" value should be equal to "([^"]*)"$/
+     */
+    public function editorValueShouldBeEqualTo(string $name, string $excepted): void
+    {
+        $value = $this->getSession()->evaluateScript('return $(\'textarea[name="' . $name . '"]\').val()');
+
+        if (empty($value)) {
+            throw new \Exception('Editor value is empty');
+        }
+
+        if ($value !== $excepted) {
+            throw new \Exception('Editor value not matching : ' . $excepted . ', found :' . $value);
+        }
     }
 }
