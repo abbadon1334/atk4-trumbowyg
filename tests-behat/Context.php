@@ -7,11 +7,11 @@ namespace Atk4\TextEditor\Behat;
 class Context extends \Atk4\Ui\Behat\Context
 {
     /**
-     * @When I type in editor :id with text :text
+     * @When I type in editor :name with text :text
      */
-    public function iTypeInEditor(string $id, string $text): void
+    public function iTypeInEditor(string $name, string $text): void
     {
-        $this->getSession()->executeScript("$('#" . $id . "-editor').html('" . $text . "')");
+        $this->getSession()->executeScript("$('textarea[name=" . $name . "]').trumbowyg('html', '" . $text . "')");
     }
 
     /**
@@ -38,7 +38,7 @@ class Context extends \Atk4\Ui\Behat\Context
      */
     public function editorValueShouldBeEqualTo(string $name, string $excepted): void
     {
-        $value = $this->getElementInPage('textarea[name="' . $name . '"]')->getValue();
+        $value = $this->getSession()->evaluateScript("$('textarea[name=" . $name . "]').trumbowyg('html')");
 
         if (empty($value)) {
             throw new \Exception('Editor value is empty');

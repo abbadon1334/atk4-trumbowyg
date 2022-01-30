@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Atk4\TextEditor;
 
 use Atk4\Ui\Form\Control\Textarea;
+use Atk4\Ui\Jquery;
 
 class TextEditor extends Textarea
 {
@@ -13,7 +14,7 @@ class TextEditor extends Textarea
     public $defaultTemplate = __DIR__ . '/../template/trumbowyg.html';
 
     //public $assets_path = '/assets';
-    public string $assets_path = 'https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.20.0';
+    public string $assets_path = 'https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.25.1';
     public bool $option_resetCss = true;
     public bool $option_autogrow = true;
     public array $editor_options = [
@@ -44,23 +45,44 @@ class TextEditor extends Textarea
         '/ui/trumbowyg.css',
     ];
 
-    protected function init(): void
+    /**
+     * Render view.
+     */
+    protected function renderView(): void
     {
-        parent::init();
+        parent::renderView();
 
         $this->addRequiredAssets();
 
         foreach ($this->plugins as $plugin) {
             $this->addRequiredPlugin($plugin);
         }
-        //$this->setStyle('display','block');
 
         $this->editor_options['resetCss'] = $this->option_resetCss;
         $this->editor_options['autogrow'] = $this->option_autogrow;
 
         $jsInput = $this->jsInput(true);
         $jsInput->trumbowyg($this->editor_options); // @phpstan-ignore-line
-        $jsInput->parent()->find('.trumbowyg-editor')->attr('id', $this->short_name . '-editor');
+    }
+
+    /**
+     * Will return jQuery expression to set editor html content.
+     *
+     * @param string|bool|null $when Event when chain will be executed
+     */
+    public function jsSetHtml($when = null, string $html = ''): Jquery
+    {
+        return $this->jsInput($when)->trumbowyg('html', $html); // @phpstan-ignore-line
+    }
+
+    /**
+     * Will return jQuery expression to get editor html content.
+     *
+     * @param string|bool|null $when Event when chain will be executed
+     */
+    public function jsGetHtml($when = null): Jquery
+    {
+        return $this->jsInput($when)->trumbowyg('html'); // @phpstan-ignore-line
     }
 
     private function addRequiredAssets(): void
