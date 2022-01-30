@@ -26,8 +26,15 @@ class Context extends \Atk4\Ui\Behat\Context
      */
     public function modalIsOpenWithRawText(string $text, string $tag = 'div'): void
     {
-        $modal = $this->getElementInPage('.modal.visible.active.front');
-        $this->getElementInElement($modal, '//' . $tag . '[text()["' . $text . '"]]', 'xpath');
+        $html = $this->getElementInPage('.modal.visible.active.front')->getHtml();
+
+        if (empty($html)) {
+            throw new \Exception('Modal html is empty');
+        }
+
+        if (strpos($html, $text) === false) {
+            throw new \Exception('Text not found');
+        }
     }
 
     /**
@@ -35,7 +42,7 @@ class Context extends \Atk4\Ui\Behat\Context
      */
     public function editorValueShouldBeEqualTo(string $name, string $excepted): void
     {
-        $value = $this->getElementInPage("textarea[name='" . $name . "']")->getValue();
+        $value = $this->getElementInPage('textarea[name="' . $name . '"]')->getValue();
 
         if (empty($value)) {
             throw new \Exception('Editor value is empty');
