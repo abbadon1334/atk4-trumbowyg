@@ -35,7 +35,7 @@ class Context extends \Atk4\Ui\Behat\Context
      */
     public function editorValueShouldBeEqualTo(string $name, string $excepted): void
     {
-        $value = $this->getSession()->evaluateScript('return $(\'[name="' . $name . '"]\').val()');
+        $value = $this->getSession()->evaluateScript('return document.getElementsByName(\'' . $name . '\')[0].value');
 
         if (empty($value)) {
             throw new \Exception('Editor value is empty');
