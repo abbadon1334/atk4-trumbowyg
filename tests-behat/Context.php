@@ -39,7 +39,7 @@ class Context extends \Atk4\Ui\Behat\Context
             throw new \Exception('Could not get element with id : ' . $id);
         }
 
-        $value = $this->getSession()->evaluateScript("return $('#" . $id . "').val()");
+        $value = $this->getSession()->evaluateScript("return $('#" . $id . "').value");
 
         if (empty($value)) {
             throw new \Exception('Editor value is empty');
