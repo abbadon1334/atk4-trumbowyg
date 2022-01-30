@@ -21,7 +21,7 @@ $form->setModel((new Post($app->db))->createEntity(), []);
 
 $form->addControl('subject');
 $form->addControl('body', [
-    \Atk4\Ui\Form\Control\TextEditor::class,
+    \Atk4\TextEditor\TextEditor::class,
     'placeholder' => 'test placeholder',
 ]);
 

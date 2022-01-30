@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Atk4\TextEditor\Tests;
 
 use Atk4\Data\Schema\TestCase;
+use Atk4\TextEditor\TextEditor;
 use Atk4\Ui\App;
 use Atk4\Ui\Form;
-use Atk4\TextEditor\TextEditor;
 use Atk4\Ui\Layout\Centered;
 
 class TextEditorTest extends TestCase
