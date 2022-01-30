@@ -11,8 +11,6 @@ class TextEditor extends Textarea
 {
     protected static array $loaded_assets = [];
 
-    public $defaultTemplate = __DIR__ . '/../template/trumbowyg.html';
-
     //public $assets_path = '/assets';
     public string $assets_path = 'https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.25.1';
     public bool $option_resetCss = true;
