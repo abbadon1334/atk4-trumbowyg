@@ -49,7 +49,7 @@ class Context extends \Atk4\Ui\Behat\Context
         }
 
         if ($modal_text->getText() !== $text) {
-            throw new \Exception('Text not found, but found this text in element :' . $modal_text->getText());
+            throw new \Exception('Text not found, but found this text in element');
         }
     }
 
