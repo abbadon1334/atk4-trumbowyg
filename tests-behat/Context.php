@@ -22,43 +22,4 @@ class Context extends \Atk4\Ui\Behat\Context
         $session->executeScript($script);
         $session->executeScript("$('#" . $id . "').trigger('keyup')");
     }
-
-    /**
-     * @Then Modal Editor is open with text :arg1
-     *
-     * Check if text is present in modal or dynamic modal.
-     */
-    public function editorModalIsOpenWithText(string $text): void
-    {
-        //wait until modal open
-        $this->getSession()->wait(2000, '$(".modal.transition.visible.active").length');
-
-        //wait for dynamic modal
-        $this->jqueryWait('true', 10000);
-
-        //get modal
-        $modal = $this->getSession()->getPage()->find('css', '.modal.transition.visible.active');
-        if ($modal === null) {
-            throw new \Exception('No modal found');
-        }
-
-        //find text in modal
-        $modal_text = $modal->find('xpath', '//*[text()="' . $text . '"]');
-        if (!is_a($modal_text, NodeElement::class, true)) {
-            throw new \Exception('Text not found element');
-        }
-
-        if ($modal_text->getText() !== $text) {
-            throw new \Exception('Text not found, but found this text in element');
-        }
-    }
-
-    /**
-     * @When I press editor button with class :arg1
-     */
-    public function iPressEditorButtonByClass(string $arg1): void
-    {
-        $button = $this->getSession()->getPage()->find('css', '.' . $arg1);
-        $button->click();
-    }
 }
