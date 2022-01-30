@@ -5,14 +5,14 @@ Feature: Editor
     Given I am on "index.php"
     When I fill in "subject" with "the subject"
     When I type in editor "body" with text "editor content"
-    Then I check if editor "body" value is equal to "<p>editor content</p>"
+    Then input "body" value should start with "<p>editor content</p>"
     
   Scenario:
     Given I am on "index.php"
     When I fill in "subject" with "the subject"
     When I type in editor "body" with text "editor content"
     When I press button "Save"
-    Then Modal is open with text "body : editor content" in tag "*"
+    Then Modal is open with raw text "body : editor content" in tag "*"
 
   Scenario:
     Given I am on "index.php"

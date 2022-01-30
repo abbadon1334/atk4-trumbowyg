@@ -29,22 +29,4 @@ class Context extends \Atk4\Ui\Behat\Context
         $modal = $this->getElementInPage('.modal.visible.active.front');
         $this->getElementInElement($modal, '//' . $tag . '[text()["' . $text . '"]]', 'xpath');
     }
-
-    /**
-     * @Then I check if editor :id value is equal to :text
-     */
-    public function iCheckIfEditorValueMatchesText(string $name, string $text): void
-    {
-        $this->assertSession()->fieldExists($name);
-
-        $value = $this->getSession()->evaluateScript("return $('textarea[name=\"" . $name . "\"]').value");
-
-        if (empty($value)) {
-            throw new \Exception('Editor value is empty');
-        }
-
-        if ($value !== $text) {
-            throw new \Exception('Text is not matching, found : ' . $value);
-        }
-    }
 }
