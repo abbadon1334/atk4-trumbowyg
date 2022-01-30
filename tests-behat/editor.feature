@@ -15,4 +15,4 @@ Feature: Editor
     When I type in editor "body-editor" with text "editor content"
     When I click first element using class ".trumbowyg-viewHTML-button"
     When I press button "Save"
-    Then Modal is open with text "editor content" in tag "p"
+    Then Modal is open with text "&lt;p&gt;editor content&lt;/p&gt;" in tag "*"
