@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Atk4\Ui\Component\Demos;
+namespace Atk4\TextEditor\Demos;
 
 use Atk4\Data\Persistence;
 use Atk4\Data\Schema\Migrator;
-use Atk4\Ui\Component\Demos\Model\Post;
+use Atk4\TextEditor\Demos\Model\Post;
 
 require_once __DIR__ . '/../init-autoloader.php';
 

@@ -37,13 +37,13 @@
     "prefer-stable": true,
     "autoload": {
         "psr-4": {
-            "Atk4\\Ui\\Form\\Control\\": "src/"
+            "Atk4\\TextEditor\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Atk4\\Ui\\Component\\Tests\\": "tests/",
-            "Atk4\\Ui\\Component\\Behat\\": "tests-behat/"
+            "Atk4\\TextEditor\\Tests\\": "tests/",
+            "Atk4\\TextEditor\\Behat\\": "tests-behat/"
         }
     },
     "config": {

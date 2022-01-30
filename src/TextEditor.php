@@ -2,7 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Atk4\Ui\Form\Control;
+namespace Atk4\TextEditor;
+
+use Atk4\Ui\Form\Control\Textarea;
 
 class TextEditor extends Textarea
 {

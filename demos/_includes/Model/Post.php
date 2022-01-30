@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Atk4\Ui\Component\Demos\Model;
+namespace Atk4\TextEditor\Demos\Model;
 
 class Post extends \Atk4\Data\Model
 {

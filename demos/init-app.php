@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Atk4\Ui\Component\Demos;
+namespace Atk4\TextEditor\Demos;
 
 use Atk4\Data\Persistence;
 use Atk4\Ui\App;
