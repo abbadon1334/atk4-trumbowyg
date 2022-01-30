@@ -33,7 +33,7 @@ class Context extends \Atk4\Ui\Behat\Context
         }
 
         if (strpos($html, $text) === false) {
-            throw new \Exception('Text not found');
+            throw new \Exception('Text not found, found : ' . $html);
         }
     }
 
