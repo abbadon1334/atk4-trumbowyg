@@ -2,25 +2,29 @@
 
 declare(strict_types=1);
 
-namespace Atk4\Ui\Demos;
+namespace Atk4\TextEditor\Demos;
+
+use Atk4\TextEditor\Demos\Model\Post;
+use Atk4\TextEditor\TextEditor;
+use Atk4\Ui\Button;
+use Atk4\Ui\Form\Control\Input;
+use Atk4\Ui\Layout\Centered;
 
 date_default_timezone_set('UTC');
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-use Atk4\Ui\App;
-use Atk4\Ui\Layout\Centered;
+/** @var \Atk4\Ui\App $app */
+require __DIR__ . '/init-app.php';
 
-$app = new App([
-    'title' => 'Agile toolkit WYSIWYG',
-    'call_exit' => false,
-]);
 $app->initLayout([Centered::class]);
 
 $form = \Atk4\Ui\Form::addTo($app);
+$form->setModel((new Post($app->db))->createEntity(), []);
+
 $form->addControl('subject');
-$form->addControl('editor', [
-    \Atk4\Ui\Form\Control\TextEditor::class,
+$form->addControl('body', [
+    \Atk4\TextEditor\TextEditor::class,
     'placeholder' => 'test placeholder',
 ]);
 
@@ -28,9 +32,31 @@ $form->onSubmit(function ($f) {
     $view = new \Atk4\Ui\Message();
     $view->invokeInit();
     $view->text->addParagraph('subject : ' . $f->model->get('subject'));
-    $view->text->addParagraph('editor : ' . $f->model->get('editor'));
+    $view->text->addParagraph('body : ' . $f->model->get('body'));
 
     return $view;
+});
+
+/** @var Input $input */
+$input = $form->getControl('subject');
+
+/** @var TextEditor $editor */
+$editor = $form->getControl('body');
+
+Button::addTo($app, ['set editor content with random value'])->on('click', function ($jq) use ($editor) {
+    return $editor->jsSetHtml(true, (string) random_int(0, 10000));
+});
+
+Button::addTo($app, ['get editor content'])->on('click', function ($jq, $content) {
+    return $content;
+}, [$editor->jsGetHtml()]);
+
+Button::addTo($app, ['refresh editor'])->on('click', function ($jq) use ($editor) {
+    return $editor->jsReload();
+});
+
+Button::addTo($app, ['refresh input'])->on('click', function ($jq) use ($input) {
+    return $input->jsReload();
 });
 
 $app->run();

@@ -1,24 +1,25 @@
 default:
   suites:
-    atk4_login:
+    main:
       paths:
         features: '%paths.base%/tests-behat'
       contexts:
-        - TextEditor\Behat\Context
         - Behat\MinkExtension\Context\MinkContext
+        - Atk4\TextEditor\Behat\Context
   extensions:
     Behat\MinkExtension:
-      show_cmd: 'open %s'
-      base_url:  'http://127.0.0.1:8888/demos/'
+      base_url: 'http://127.0.0.1:8888/demos'
       sessions:
         default:
           selenium2:
-             browser: chrome
-             wd_host: http://127.0.0.1:4444/wd/hub
-             capabilities:
-               chrome:
-                 switches:
-                   - "--headless"
-                   - "--disable-gpu"
-                   - "--window-size=1920,1080"
-                   - "--no-sandbox"
+            browser: chrome
+            wd_host: 'http://127.0.0.1:4444/wd/hub'
+            capabilities:
+              extra_capabilities:
+                chrome:
+                  args:
+                    - '--no-sandbox'
+                    - '--headless'
+                    - '--disable-dev-shm-usage'
+                    - '--disable-gpu'
+                    - '--window-size=1920,1200'

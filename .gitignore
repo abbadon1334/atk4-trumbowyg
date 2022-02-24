@@ -14,3 +14,5 @@ docs/build
 yarn.lock
 run_local.sh
 /coverage
+/bower_components/
+/assets/
