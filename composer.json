@@ -42,14 +42,15 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Atk4\\TextEditor\\Tests\\": "tests/",
-            "Atk4\\TextEditor\\Behat\\": "tests-behat/"
+            "Atk4\\TextEditor\\Behat\\": "tests-behat/",
+            "Atk4\\TextEditor\\Tests\\": "tests/"
         }
     },
     "config": {
-        "sort-packages": true,
         "allow-plugins": {
-            "ergebnis/composer-normalize": true
-        }
+            "ergebnis/composer-normalize": true,
+            "phpstan/extension-installer": true
+        },
+        "sort-packages": true
     }
 }
