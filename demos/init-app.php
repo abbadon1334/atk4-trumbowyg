@@ -17,7 +17,7 @@ if (file_exists(__DIR__ . '/CoverageUtil.php') && !class_exists(\PHPUnit\Framewo
     \CoverageUtil::start();
 }
 
-$app = new App();
+$app = new App(['title' => 'ATK4 :: Trumbowyg Demo']);
 
 // collect coverage for HTTP tests 2/2
 if (file_exists(__DIR__ . '/CoverageUtil.php') && !class_exists(\PHPUnit\Framework\TestCase::class, false)) {
@@ -34,5 +34,3 @@ try {
 } catch (\Throwable $e) {
     throw new \Atk4\Ui\Exception('Database error: ' . $e->getMessage());
 }
-
-$app->invokeInit();
