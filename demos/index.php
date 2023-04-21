@@ -7,8 +7,10 @@ namespace Atk4\TextEditor\Demos;
 use Atk4\TextEditor\Demos\Model\Post;
 use Atk4\TextEditor\TextEditor;
 use Atk4\Ui\Button;
+use Atk4\Ui\Form;
 use Atk4\Ui\Form\Control\Input;
 use Atk4\Ui\Layout\Centered;
+use Atk4\Ui\Message;
 
 date_default_timezone_set('UTC');
 
@@ -19,17 +21,18 @@ require __DIR__ . '/init-app.php';
 
 $app->initLayout([Centered::class]);
 
-$form = \Atk4\Ui\Form::addTo($app);
+$form = Form::addTo($app);
 $form->setModel((new Post($app->db))->createEntity(), []);
 
 $form->addControl('subject');
 $form->addControl('body', [
-    \Atk4\TextEditor\TextEditor::class,
+    TextEditor::class,
     'placeholder' => 'test placeholder',
 ]);
 
 $form->onSubmit(function ($f) {
-    $view = new \Atk4\Ui\Message();
+    $view = new Message();
+    $view->setApp($f->getApp());
     $view->invokeInit();
     $view->text->addParagraph('subject : ' . $f->model->get('subject'));
     $view->text->addParagraph('body : ' . $f->model->get('body'));
@@ -58,5 +61,3 @@ Button::addTo($app, ['refresh editor'])->on('click', function ($jq) use ($editor
 Button::addTo($app, ['refresh input'])->on('click', function ($jq) use ($input) {
     return $input->jsReload();
 });
-
-$app->run();

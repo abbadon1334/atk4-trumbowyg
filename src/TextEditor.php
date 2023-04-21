@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Atk4\TextEditor;
 
 use Atk4\Ui\Form\Control\Textarea;
-use Atk4\Ui\Jquery;
+use Atk4\Ui\Js\Jquery;
 
 class TextEditor extends Textarea
 {
@@ -66,9 +66,9 @@ class TextEditor extends Textarea
     /**
      * Will return jQuery expression to set editor html content.
      *
-     * @param string|bool|null $when Event when chain will be executed
+     * @param string|bool $when Event when chain will be executed
      */
-    public function jsSetHtml($when = null, string $html = ''): Jquery
+    public function jsSetHtml($when = false, string $html = ''): Jquery
     {
         return $this->jsInput($when)->trumbowyg('html', $html); // @phpstan-ignore-line
     }
@@ -76,9 +76,9 @@ class TextEditor extends Textarea
     /**
      * Will return jQuery expression to get editor html content.
      *
-     * @param string|bool|null $when Event when chain will be executed
+     * @param string|bool $when Event when chain will be executed
      */
-    public function jsGetHtml($when = null): Jquery
+    public function jsGetHtml($when = false): Jquery
     {
         return $this->jsInput($when)->trumbowyg('html'); // @phpstan-ignore-line
     }
