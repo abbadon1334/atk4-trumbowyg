@@ -25,7 +25,7 @@ jobs:
             type: 'StaticAnalysis'
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Configure PHP
         run: |
@@ -111,7 +111,7 @@ jobs:
         options: --health-cmd healthcheck.sh --health-interval=10s --health-timeout=5s --health-retries=10
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Configure PHP
         run: |
@@ -266,7 +266,7 @@ jobs:
         options: --health-cmd healthcheck.sh --health-interval=10s --health-timeout=5s --health-retries=10
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Configure PHP
         run: |
