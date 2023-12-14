@@ -10,7 +10,7 @@
         }
     ],
     "require": {
-        "php": ">=7.4 <8.2",
+        "php": "<8.4",
         "atk4/ui": "dev-develop"
     },
     "require-release": {
