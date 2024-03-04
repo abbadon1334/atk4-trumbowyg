@@ -105,7 +105,7 @@ jobs:
           ACCEPT_EULA: Y
           SA_PASSWORD: atk4_pass
       oracle:
-        image: gvenzl/oracle-xe:18-slim-faststart
+        image: gvenzl/oracle-xe:21-slim-faststart
         env:
           ORACLE_PASSWORD: atk4_pass
     steps:
@@ -260,7 +260,7 @@ jobs:
           ACCEPT_EULA: Y
           SA_PASSWORD: atk4_pass
       oracle:
-        image: gvenzl/oracle-xe:18-slim-faststart
+        image: gvenzl/oracle-xe:21-slim-faststart
         env:
           ORACLE_PASSWORD: atk4_pass
     steps:
