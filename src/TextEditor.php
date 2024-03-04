@@ -11,8 +11,8 @@ class TextEditor extends Textarea
 {
     protected static array $loaded_assets = [];
 
-    //public $assets_path = '/assets';
-    public string $assets_path = 'https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.25.1';
+    // public $assets_path = '/assets';
+    public string $assets_path = 'https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.27.3';
     public bool $option_resetCss = true;
     public bool $option_autogrow = true;
     public array $editor_options = [

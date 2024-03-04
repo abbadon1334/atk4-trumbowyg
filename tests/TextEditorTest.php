@@ -22,86 +22,72 @@ class TextEditorTest extends TestCase
 
     public function testInit(): void
     {
-        ob_start();
-        try {
-            $app = $this->getApp();
+        $app = $this->getApp();
+        $app->initLayout([Centered::class]);
 
-            $app->initLayout([Centered::class]);
+        $form = Form::addTo($app);
+        $form->addControl('subject');
+        $form->addControl('editor', [
+            TextEditor::class,
+            'placeholder' => 'test placeholder',
+        ]);
+        $app->run();
 
-            $form = Form::addTo($app);
-            $form->addControl('subject');
-            $form->addControl('editor', [
-                TextEditor::class,
-                'placeholder' => 'test placeholder',
-            ]);
-            $app->run();
-        } finally {
-            $output = ob_get_clean();
-        }
-
-        $this->assertSame(1, substr_count($output, (new TextEditor())->assets_path . '/trumbowyg.js'));
-        $this->assertSame(1, substr_count($output, (new TextEditor())->assets_path . '/ui/trumbowyg.css'));
+        $this->assertSame(1, substr_count($app->output, (new TextEditor())->assets_path . '/trumbowyg.js'));
+        $this->assertSame(1, substr_count($app->output, (new TextEditor())->assets_path . '/ui/trumbowyg.css'));
     }
 
     public function testCheckDouble(): void
     {
-        ob_start();
-        try {
-            $app = $this->getApp();
+        $app = $this->getApp();
 
-            $app->initLayout([Centered::class]);
+        $app->initLayout([Centered::class]);
 
-            $form = Form::addTo($app);
-            $form->addControl('subject');
-            $form->addControl('editor', [
-                TextEditor::class,
-                'placeholder' => 'test placeholder',
-            ]);
-            $form->addControl('editor2', [
-                TextEditor::class,
-                'placeholder' => 'test placeholder',
-            ]);
-            $app->run();
-        } finally {
-            $output = ob_get_clean();
-        }
+        $form = Form::addTo($app);
+        $form->addControl('subject');
+        $form->addControl('editor', [
+            TextEditor::class,
+            'placeholder' => 'test placeholder',
+        ]);
+        $form->addControl('editor2', [
+            TextEditor::class,
+            'placeholder' => 'test placeholder',
+        ]);
+        $app->run();
 
-        $this->assertSame(1, substr_count($output, (new TextEditor())->assets_path . '/trumbowyg.js'));
-        $this->assertSame(1, substr_count($output, (new TextEditor())->assets_path . '/ui/trumbowyg.css'));
+        $this->assertSame(1, substr_count($app->output, (new TextEditor())->assets_path . '/trumbowyg.js'));
+        $this->assertSame(1, substr_count($app->output, (new TextEditor())->assets_path . '/ui/trumbowyg.css'));
     }
 
     public function testPlugin(): void
     {
-        ob_start();
-        try {
-            $app = $this->getApp();
+        $app = $this->getApp();
 
-            $app->initLayout([Centered::class]);
+        $app->initLayout([Centered::class]);
 
-            $form = Form::addTo($app);
-            $form->addControl('subject');
-            $form->addControl('editor', [
-                TextEditor::class,
-                'placeholder' => 'test placeholder',
-                'plugins' => [
-                    'base64',
-                ],
-            ]);
-            $app->run();
-        } finally {
-            $output = ob_get_clean();
-        }
+        $form = Form::addTo($app);
+        $form->addControl('subject');
+        $form->addControl('editor', [
+            TextEditor::class,
+            'placeholder' => 'test placeholder',
+            'plugins' => [
+                'base64',
+            ],
+        ]);
+        $app->run();
 
-        $this->assertStringContainsString('plugins/base64', $output);
+        $this->assertStringContainsString('plugins/base64', $app->output);
     }
 
-    private function getApp(): App
+    private function getApp(): AppFormTestMock
     {
-        return new App([
-            'catch_exceptions' => false,
-            'always_run' => false,
-            'catch_runaway_callbacks' => false,
-            'call_exit' => false,
+        $_SERVER['REQUEST_URI'] = '/';
+
+        return new AppFormTestMock([
+            'catchExceptions' => false,
+            'alwaysRun' => false,
+            'catchRunawayCallbacks' => false,
+            'callExit' => false,
         ]);
     }
 }
@@ -110,7 +96,7 @@ class AppFormTestMock extends App
 {
     public string $output;
 
-    protected function outputResponse(string $data, array $headers): void
+    protected function outputResponse(string $data): void
     {
         $this->output = $data;
     }

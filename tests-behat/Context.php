@@ -22,7 +22,7 @@ class Context extends \Atk4\Ui\Behat\Context
      */
     public function modalIsOpenWithRawText(string $text, string $tag = 'div'): void
     {
-        $html = $this->getElementInPage('.modal.visible.active.front')->getHtml();
+        $html = $this->findElement(null, '.modal.visible.active.front')->getHtml();
 
         if (empty($html)) {
             throw new \Exception('Modal html is empty');

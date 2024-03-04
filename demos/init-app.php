@@ -6,13 +6,15 @@ namespace Atk4\TextEditor\Demos;
 
 use Atk4\Data\Persistence;
 use Atk4\Ui\App;
+use Atk4\Ui\Exception;
+use PHPUnit\Framework\TestCase;
 
 date_default_timezone_set('UTC');
 
 require_once __DIR__ . '/init-autoloader.php';
 
 // collect coverage for HTTP tests 1/2
-if (file_exists(__DIR__ . '/CoverageUtil.php') && !class_exists(\PHPUnit\Framework\TestCase::class, false)) {
+if (file_exists(__DIR__ . '/CoverageUtil.php') && !class_exists(TestCase::class, false)) {
     require_once __DIR__ . '/CoverageUtil.php';
     \CoverageUtil::start();
 }
@@ -20,8 +22,8 @@ if (file_exists(__DIR__ . '/CoverageUtil.php') && !class_exists(\PHPUnit\Framewo
 $app = new App(['title' => 'ATK4 :: Trumbowyg Demo']);
 
 // collect coverage for HTTP tests 2/2
-if (file_exists(__DIR__ . '/CoverageUtil.php') && !class_exists(\PHPUnit\Framework\TestCase::class, false)) {
-    $app->onHook(\Atk4\Ui\App::HOOK_BEFORE_EXIT, function () {
+if (file_exists(__DIR__ . '/CoverageUtil.php') && !class_exists(TestCase::class, false)) {
+    $app->onHook(App::HOOK_BEFORE_EXIT, static function () {
         \CoverageUtil::saveData();
     });
 }
@@ -32,5 +34,5 @@ try {
     $app->db = $db;
     unset($db);
 } catch (\Throwable $e) {
-    throw new \Atk4\Ui\Exception('Database error: ' . $e->getMessage());
+    throw new Exception('Database error: ' . $e->getMessage());
 }

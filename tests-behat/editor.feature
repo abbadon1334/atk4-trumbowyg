@@ -35,6 +35,6 @@ Feature: Editor
     Given I am on "index.php"
     When I fill in "subject" with "the subject"
     When I type in editor "body" with text "editor content"
-    When I click icon using css ".trumbowyg-viewHTML-button"
+    When I click using selector ".trumbowyg-viewHTML-button"
     When I press button "Save"
     Then Modal is open with raw text "body : &lt;p&gt;editor content&lt;/p&gt;" in tag "p"
