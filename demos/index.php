@@ -6,6 +6,7 @@ namespace Atk4\TextEditor\Demos;
 
 use Atk4\TextEditor\Demos\Model\Post;
 use Atk4\TextEditor\TextEditor;
+use Atk4\Ui\App;
 use Atk4\Ui\Button;
 use Atk4\Ui\Form;
 use Atk4\Ui\Form\Control\Input;
@@ -16,7 +17,7 @@ date_default_timezone_set('UTC');
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-/** @var \Atk4\Ui\App $app */
+/** @var App $app */
 require __DIR__ . '/init-app.php';
 
 $app->initLayout([Centered::class]);
@@ -30,7 +31,7 @@ $form->addControl('body', [
     'placeholder' => 'test placeholder',
 ]);
 
-$form->onSubmit(function ($f) {
+$form->onSubmit(static function ($f) {
     $view = new Message();
     $view->setApp($f->getApp());
     $view->invokeInit();
@@ -46,18 +47,18 @@ $input = $form->getControl('subject');
 /** @var TextEditor $editor */
 $editor = $form->getControl('body');
 
-Button::addTo($app, ['set editor content with random value'])->on('click', function ($jq) use ($editor) {
+Button::addTo($app, ['set editor content with random value'])->on('click', static function ($jq) use ($editor) {
     return $editor->jsSetHtml(true, (string) random_int(0, 10000));
 });
 
-Button::addTo($app, ['get editor content'])->on('click', function ($jq, $content) {
+Button::addTo($app, ['get editor content'])->on('click', static function ($jq, $content) {
     return $content;
 }, [$editor->jsGetHtml()]);
 
-Button::addTo($app, ['refresh editor'])->on('click', function ($jq) use ($editor) {
+Button::addTo($app, ['refresh editor'])->on('click', static function ($jq) use ($editor) {
     return $editor->jsReload();
 });
 
-Button::addTo($app, ['refresh input'])->on('click', function ($jq) use ($input) {
+Button::addTo($app, ['refresh input'])->on('click', static function ($jq) use ($input) {
     return $input->jsReload();
 });

@@ -22,7 +22,6 @@ class TextEditorTest extends TestCase
 
     public function testInit(): void
     {
-
         $app = $this->getApp();
         $app->initLayout([Centered::class]);
 
@@ -36,7 +35,6 @@ class TextEditorTest extends TestCase
 
         $this->assertSame(1, substr_count($app->output, (new TextEditor())->assets_path . '/trumbowyg.js'));
         $this->assertSame(1, substr_count($app->output, (new TextEditor())->assets_path . '/ui/trumbowyg.css'));
-
     }
 
     public function testCheckDouble(): void
@@ -102,6 +100,4 @@ class AppFormTestMock extends App
     {
         $this->output = $data;
     }
-
-
 }

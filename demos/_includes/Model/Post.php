@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Atk4\TextEditor\Demos\Model;
 
-class Post extends \Atk4\Data\Model
+use Atk4\Data\Model;
+
+class Post extends Model
 {
     public $table = 'post';
 
