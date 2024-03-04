@@ -79,7 +79,7 @@ class TextEditorTest extends TestCase
         $this->assertStringContainsString('plugins/base64', $app->output);
     }
 
-    private function getApp(): App
+    private function getApp(): AppFormTestMock
     {
         $_SERVER['REQUEST_URI'] = '/';
 
