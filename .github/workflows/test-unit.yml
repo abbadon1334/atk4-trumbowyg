@@ -25,7 +25,7 @@ jobs:
             type: 'StaticAnalysis'
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Configure PHP
         run: |
@@ -110,7 +110,7 @@ jobs:
           ORACLE_PASSWORD: atk4_pass
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Configure PHP
         run: |
@@ -265,7 +265,7 @@ jobs:
           ORACLE_PASSWORD: atk4_pass
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Configure PHP
         run: |
